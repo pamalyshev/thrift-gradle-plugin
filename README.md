@@ -12,23 +12,15 @@ To use this plugin, add the following to your build script.
 buildscript {
 	repositories {
 		maven {
-			url "https://plugins.gradle.org/m2/"
+			url 'https://jitpack.io'
 		}
 	}
 	dependencies {
-		classpath "gradle.plugin.org.jruyi.gradle:thrift-gradle-plugin:0.3.2"
+		classpath "com.github.pamalyshev:thrift-gradle-plugin:v0.3.3"
 	}
 }
 
 apply plugin: "org.jruyi.thrift"
-```
-
-Or for Gradle 2.1+:
-
-```groovy
-plugins {
-	id "org.jruyi.thrift" version "0.3.2"
-}
 ```
 
 ### Example
