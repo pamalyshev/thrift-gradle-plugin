@@ -73,6 +73,10 @@ If thriftFiles is not empty then only files in thriftFiles will be compiled. Rel
 compileThrift {
 	recurse true
 
+	/* If you need to compile only specified files use thriftFile method */
+	//thriftFile 'dir/file1.thrift'
+	//thriftFile 'dir/file2.thrift'
+
 	generator 'html'
 	generator 'java', 'private-members'
 }
