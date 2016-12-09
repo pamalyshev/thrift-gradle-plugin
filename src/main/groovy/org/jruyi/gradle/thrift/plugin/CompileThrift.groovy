@@ -53,6 +53,9 @@ class CompileThrift extends DefaultTask {
 	@Input
 	boolean allow64bitsConsts
 
+	@Input
+	Set<File> thriftFiles = []
+
 	boolean nowarn
 	boolean strict
 	boolean verbose
@@ -83,6 +86,14 @@ class CompileThrift extends DefaultTask {
 			includeDir = project.file(includeDir)
 
 		includeDirs << includeDir
+	}
+
+	def thriftFile(File file) {
+		thriftFiles << file
+	}
+
+	def thriftFile(String file) {
+		thriftFiles << new File(file)
 	}
 
 	def generator(Object gen, Object... args) {
@@ -145,10 +156,17 @@ class CompileThrift extends DefaultTask {
 		if (!outputDir.mkdirs())
 			throw new GradleException("Could not create thrift output directory: ${outputDir.absolutePath}")
 
-		project.fileTree(sourceDir.canonicalPath) {
+		if (thriftFiles.isEmpty()) {
+			project.fileTree(sourceDir.canonicalPath) {
 			include '**/*.thrift'
-		}.each { it ->
-			compile(it.absolutePath)
+			}.each { it ->
+				compile(it.absolutePath)
+			}
+		} else {
+			thriftFiles.each { it ->
+				File sourceFile = it.absolute ? it : new File(sourceDir, it.getPath())
+				compile(sourceFile.absolutePath)
+			}
 		}
 	}
 

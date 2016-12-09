@@ -50,6 +50,7 @@ Task Property     | Type                | Default Value
 thriftExecutable  | String              | thrift
 sourceDir         | File                | src/main/thrift
 outputDir         | File                | _buildDir_/generated-sources/thrift
+thriftFiles       | Set<File>           | []
 includeDirs       | Set<File>           | []
 generators        | Map<String, String> | ['java':''] if JavaPlugin is applied, otherwise []
 nowarn            | boolean             | false
@@ -62,6 +63,9 @@ allow64bitsConsts | boolean             | false
 createGenFolder   | boolean             | true
 
 If createGenFolder is set to false, no gen-* folder will be created.
+
+If thriftFiles is empty then all .thrift files under sourceDir will be compiled.
+If thriftFiles is not empty then only files in thriftFiles will be compiled. Relative paths are resolved against sourceDir.
 
 ##### Example
 
